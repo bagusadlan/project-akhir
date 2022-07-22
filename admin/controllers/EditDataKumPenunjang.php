@@ -1,6 +1,6 @@
 <?php
 
-class EditDataKumPendidikan extends Controller
+class EditDataKumPenunjang extends Controller
 {
     public function __construct()
     {
@@ -9,20 +9,12 @@ class EditDataKumPendidikan extends Controller
     
     public function index()
     {
-        $data = [];
-        $data['title'] = 'Dashboard';
 
-        $data['angkaKreditPerPeriode'] = ['Jan', 'Feb', 'Apr', 'Jun', 'Sep', 'Nov'];
-        $data['angkaKreditPendidikanPerPeriode'] = [5, 0, 7, 6, 0, 0];
-        $data['angkaKreditPenunjangPerPeriode'] = [2, 1, 0, 0, 1, 1];
-        
-        $data['totalAngkaKreditPendidikan'] = countAngkaKreditPendidikan()[0];
-        $data['totalAngkaKreditPenunjang'] = countAngkaKreditPenunjang()[0];
     }
 
-    public function getData1()
+    public function getData14()
     {
-		$sql = "SELECT nomor, program, tahun_ajaran, semester, mata_kuliah, kelas, sks, tempat, tanggal, keterangan FROM DOKUMEN_BIDANG WHERE NOMOR = :v1";
+		$sql = "SELECT NOMOR, NIP, PROGRAM, TEMPAT, TANGGAL, KETERANGAN, KEDUDUKAN, SEMESTER, TAHUN_AJARAN FROM DOKUMEN_BIDANG WHERE NOMOR = :v1";
 		$rows = array(':v1' => $_POST['id']);
 
 		$hasil = query_view($sql, $rows);
@@ -33,9 +25,9 @@ class EditDataKumPendidikan extends Controller
         echo json_encode($rows[0]);
     }
 
-    public function getData2()
+    public function getData15()
     {
-		$sql = "SELECT nomor, program, tahun_ajaran, semester, tempat, tanggal, keterangan FROM DOKUMEN_BIDANG WHERE NOMOR = :v1";
+		$sql = "SELECT NOMOR, NIP, PROGRAM, TEMPAT, TANGGAL, KETERANGAN, SEMESTER, TAHUN_AJARAN, JENIS_PANITIA, KEDUDUKAN_PADA_LEMBAGA FROM DOKUMEN_BIDANG WHERE NOMOR = :v1";
 		$rows = array(':v1' => $_POST['id']);
 
 		$hasil = query_view($sql, $rows);
@@ -46,15 +38,13 @@ class EditDataKumPendidikan extends Controller
         echo json_encode($rows[0]);
     }
 
-    public function editData1()
+    public function editData14()
     {
         $nomor = $_POST['nomor'];
         $program = $_POST['program'];
         $tahun_ajaran = $_POST['tahun_ajaran'];
         $semester = $_POST['semester'];
-        $mata_kuliah = $_POST['mata_kuliah'];
-        $kelas = $_POST['kelas'];
-        $sks = $_POST['jumlah_sks'];
+        $kedudukan = $_POST['kedudukan'];
         $tempat = $_POST['tempat'];
         $tanggal = $_POST['tanggal'];
         $keterangan = $_POST['keterangan'];
@@ -63,9 +53,7 @@ class EditDataKumPendidikan extends Controller
             program = :v2,
             tahun_ajaran = :v3,
             semester = :v4,
-            mata_kuliah = :v5,
-            kelas = :v6,
-            sks = :v7,
+            kedudukan = :v5,
             tempat = :v8,
             tanggal = :v9,
             keterangan = :v10
@@ -75,9 +63,7 @@ class EditDataKumPendidikan extends Controller
                     ':v2' => $program,
                     ':v3' => $tahun_ajaran,
                     ':v4' => $semester,
-                    ':v5' => $mata_kuliah,
-                    ':v6' => $kelas,
-                    ':v7' => $sks,
+                    ':v5' => $kedudukan,
                     ':v8' => $tempat,
                     ':v9' => $tanggal,
                     ':v10' => $keterangan
@@ -86,7 +72,7 @@ class EditDataKumPendidikan extends Controller
 		query_update($sql, $data);
     }
 
-    public function editData2()
+    public function editData15()
     {
         $nomor = $_POST['nomor'];
         $program = $_POST['program'];
@@ -117,9 +103,9 @@ class EditDataKumPendidikan extends Controller
 		query_update($sql, $data);
     }
 
-    public function getData3()
+    public function getData16()
     {
-		$sql = "SELECT nomor, program, nama_perusahaan, tahun_ajaran, semester, tempat, tanggal, keterangan FROM DOKUMEN_BIDANG WHERE NOMOR = :v1";
+		$sql = "SELECT NOMOR, NIP, PROGRAM, TEMPAT, TANGGAL, KETERANGAN, SEMESTER, TAHUN_AJARAN, TINGKATAN_ORGANISASI_PROFESI, KEDUDUKAN_ORGANISASI_PROFESI FROM DOKUMEN_BIDANG WHERE NOMOR = :v1";
 		$rows = array(':v1' => $_POST['id']);
 
 		$hasil = query_view($sql, $rows);
@@ -130,7 +116,7 @@ class EditDataKumPendidikan extends Controller
         echo json_encode($rows[0]);
     }
 
-    public function editData3()
+    public function editData16()
     {
         $nomor = $_POST['nomor'];
         $program = $_POST['program'];
@@ -164,9 +150,9 @@ class EditDataKumPendidikan extends Controller
 		query_update($sql, $data);
     }
 
-    public function getData4()
+    public function getData17()
     {
-		$sql = "SELECT nomor, program, kategori_pembimbing, nama_mahasiswa, jenis_tugasakhir, tahun_ajaran, semester, tempat, tanggal, keterangan FROM DOKUMEN_BIDANG WHERE NOMOR = :v1";
+		$sql = "SELECT NOMOR, NIP, PROGRAM, TEMPAT, TANGGAL, KETERANGAN, SEMESTER, TAHUN_AJARAN FROM DOKUMEN_BIDANG WHERE NOMOR = :v1";
 		$rows = array(':v1' => $_POST['id']);
 
 		$hasil = query_view($sql, $rows);
@@ -177,7 +163,7 @@ class EditDataKumPendidikan extends Controller
         echo json_encode($rows[0]);
     }
 
-    public function editData4()
+    public function editData17()
     {
         $nomor = $_POST['nomor'];
         $program = $_POST['program'];
@@ -217,9 +203,9 @@ class EditDataKumPendidikan extends Controller
 		query_update($sql, $data);
     }
 
-    public function getData5()
+    public function getData18()
     {
-		$sql = "SELECT nomor, program, kategori_penguji, nama_mahasiswa, tahun_ajaran, semester, tempat, tanggal, keterangan FROM DOKUMEN_BIDANG WHERE NOMOR = :v1";
+		$sql = "SELECT NOMOR, NIP, PROGRAM, TEMPAT, TANGGAL, KETERANGAN, SEMESTER, TAHUN_AJARAN, KEDUDUKAN_PADA_DELEGASI FROM DOKUMEN_BIDANG WHERE NOMOR = :v1";
 		$rows = array(':v1' => $_POST['id']);
 
 		$hasil = query_view($sql, $rows);
@@ -230,7 +216,7 @@ class EditDataKumPendidikan extends Controller
         echo json_encode($rows[0]);
     }
 
-    public function editData5()
+    public function editData18()
     {
         $nomor = $_POST['nomor'];
         $program = $_POST['program'];
@@ -267,9 +253,9 @@ class EditDataKumPendidikan extends Controller
 		query_update($sql, $data);
     }
 
-    public function getData6()
+    public function getData19()
     {
-		$sql = "SELECT nomor, program, tahun_ajaran, semester, tempat, tanggal, keterangan FROM DOKUMEN_BIDANG WHERE NOMOR = :v1";
+		$sql = "SELECT NOMOR, NIP, PROGRAM, TEMPAT, TANGGAL, KETERANGAN, SEMESTER, TAHUN_AJARAN, TINGKATAN_PERTEMUAN_ILMIAH, KEDUDUKAN_PERTEMUAN_ILMIAH FROM DOKUMEN_BIDANG WHERE NOMOR = :v1";
 		$rows = array(':v1' => $_POST['id']);
 
 		$hasil = query_view($sql, $rows);
@@ -280,7 +266,7 @@ class EditDataKumPendidikan extends Controller
         echo json_encode($rows[0]);
     }
 
-    public function editData6()
+    public function editData19()
     {
         $nomor = $_POST['nomor'];
         $program = $_POST['program'];
@@ -311,9 +297,9 @@ class EditDataKumPendidikan extends Controller
 		query_update($sql, $data);
     }
 
-    public function getData7()
+    public function getData20()
     {
-		$sql = "SELECT nomor, program, nama_produk, tahun_ajaran, semester, tempat, tanggal, keterangan FROM DOKUMEN_BIDANG WHERE NOMOR = :v1";
+		$sql = "SELECT NOMOR, NIP, PROGRAM, TEMPAT, TANGGAL, KETERANGAN, SEMESTER, TAHUN_AJARAN, KATEGORI_PENGHARGAAN FROM DOKUMEN_BIDANG WHERE NOMOR = :v1";
 		$rows = array(':v1' => $_POST['id']);
 
 		$hasil = query_view($sql, $rows);
@@ -324,7 +310,7 @@ class EditDataKumPendidikan extends Controller
         echo json_encode($rows[0]);
     }
 
-    public function editData7()
+    public function editData20()
     {
         $nomor = $_POST['nomor'];
         $program = $_POST['program'];
@@ -358,9 +344,9 @@ class EditDataKumPendidikan extends Controller
 		query_update($sql, $data);
     }
 
-    public function getData8()
+    public function getData21()
     {
-		$sql = "SELECT nomor, program, jenis_produk, judul_bahan_ajar, tahun_ajaran, semester, tempat, tanggal, keterangan FROM DOKUMEN_BIDANG WHERE NOMOR = :v1";
+		$sql = "SELECT NOMOR, NIP, PROGRAM, TEMPAT, TANGGAL, KETERANGAN, SEMESTER, TAHUN_AJARAN, TINGKATAN_BUKU_PELAJARAN FROM DOKUMEN_BIDANG WHERE NOMOR = :v1";
 		$rows = array(':v1' => $_POST['id']);
 
 		$hasil = query_view($sql, $rows);
@@ -371,7 +357,7 @@ class EditDataKumPendidikan extends Controller
         echo json_encode($rows[0]);
     }
 
-    public function editData8()
+    public function editData21()
     {
         $nomor = $_POST['nomor'];
         $program = $_POST['program'];
@@ -408,9 +394,9 @@ class EditDataKumPendidikan extends Controller
 		query_update($sql, $data);
     }
 
-    public function getData9()
+    public function getData22()
     {
-		$sql = "SELECT nomor, program, nama_orasi_ilmiah, tahun_ajaran, semester, tempat, tanggal, keterangan FROM DOKUMEN_BIDANG WHERE NOMOR = :v1";
+		$sql = "SELECT NOMOR, NIP, PROGRAM, TEMPAT, TANGGAL, KETERANGAN, SEMESTER, TAHUN_AJARAN, TINGKATAN_PRESTASI_OLAHRAGA FROM DOKUMEN_BIDANG WHERE NOMOR = :v1";
 		$rows = array(':v1' => $_POST['id']);
 
 		$hasil = query_view($sql, $rows);
@@ -421,7 +407,7 @@ class EditDataKumPendidikan extends Controller
         echo json_encode($rows[0]);
     }
 
-    public function editData9()
+    public function editData22()
     {
         $nomor = $_POST['nomor'];
         $program = $_POST['program'];
@@ -455,9 +441,9 @@ class EditDataKumPendidikan extends Controller
 		query_update($sql, $data);
     }
 
-    public function getData10()
+    public function getData23()
     {
-		$sql = "SELECT nomor, jabatan_pimpinan, tahun_ajaran, semester, tempat, tanggal, keterangan FROM DOKUMEN_BIDANG WHERE NOMOR = :v1";
+		$sql = "SELECT NOMOR, NIP, PROGRAM, TEMPAT, TANGGAL, KETERANGAN, SEMESTER, TAHUN_AJARAN FROM DOKUMEN_BIDANG WHERE NOMOR = :v1";
 		$rows = array(':v1' => $_POST['id']);
 
 		$hasil = query_view($sql, $rows);
@@ -468,7 +454,7 @@ class EditDataKumPendidikan extends Controller
         echo json_encode($rows[0]);
     }
 
-    public function editData10()
+    public function editData23()
     {
         $nomor = $_POST['nomor'];
         $program = $_POST['program'];
@@ -494,147 +480,6 @@ class EditDataKumPendidikan extends Controller
             ':v3' => $tahun_ajaran,
             ':v4' => $semester,
             ':v5' => $jabatan_pimpinan,
-            ':v8' => $tempat,
-            ':v9' => $tanggal,
-            ':v10' => $keterangan
-        );
-
-		query_update($sql, $data);
-    }
-
-    public function getData11()
-    {
-		$sql = "SELECT nomor, program, kategori_pembimbing_dosen, tahun_ajaran, semester, tempat, tanggal, keterangan FROM DOKUMEN_BIDANG WHERE NOMOR = :v1";
-		$rows = array(':v1' => $_POST['id']);
-
-		$hasil = query_view($sql, $rows);
-		oci_fetch_all($hasil, $rows, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
-
-        // header('Content-type: application/json');
-        http_response_code(200);
-        echo json_encode($rows[0]);
-    }
-
-    public function editData11()
-    {
-        $nomor = $_POST['nomor'];
-        $program = $_POST['program'];
-        $tahun_ajaran = $_POST['tahun_ajaran'];
-        $kategori_pembimbing_dosen = $_POST['kategori_pembimbing_dosen'];
-        $semester = $_POST['semester'];
-        $tempat = $_POST['tempat'];
-        $tanggal = $_POST['tanggal'];
-        $keterangan = $_POST['keterangan'];
-
-		$sql = "UPDATE dokumen_bidang SET 
-            program = :v2,
-            tahun_ajaran = :v3,
-            semester = :v4,
-            kategori_pembimbing_dosen = :v5,
-            tempat = :v8,
-            tanggal = :v9,
-            keterangan = :v10
-        WHERE NOMOR = :v1";
-		$data = array(
-            ':v1' => $nomor,
-            ':v2' => $program,
-            ':v3' => $tahun_ajaran,
-            ':v4' => $semester,
-            ':v5' => $kategori_pembimbing_dosen,
-            ':v8' => $tempat,
-            ':v9' => $tanggal,
-            ':v10' => $keterangan
-        );
-
-		query_update($sql, $data);
-    }
-
-    public function getData12()
-    {
-		$sql = "SELECT nomor, program, kategori_kegiatan, tahun_ajaran, semester, tempat, tanggal, keterangan FROM DOKUMEN_BIDANG WHERE NOMOR = :v1";
-		$rows = array(':v1' => $_POST['id']);
-
-		$hasil = query_view($sql, $rows);
-		oci_fetch_all($hasil, $rows, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
-
-        // header('Content-type: application/json');
-        http_response_code(200);
-        echo json_encode($rows[0]);
-    }
-
-    public function editData12()
-    {
-        $nomor = $_POST['nomor'];
-        $program = $_POST['program'];
-        $tahun_ajaran = $_POST['tahun_ajaran'];
-        $kategori_kegiatan = $_POST['kategori_kegiatan'];
-        $semester = $_POST['semester'];
-        $tempat = $_POST['tempat'];
-        $tanggal = $_POST['tanggal'];
-        $keterangan = $_POST['keterangan'];
-
-		$sql = "UPDATE dokumen_bidang SET 
-            program = :v2,
-            tahun_ajaran = :v3,
-            semester = :v4,
-            kategori_kegiatan = :v5,
-            tempat = :v8,
-            tanggal = :v9,
-            keterangan = :v10
-        WHERE NOMOR = :v1";
-		$data = array(
-            ':v1' => $nomor,
-            ':v2' => $program,
-            ':v3' => $tahun_ajaran,
-            ':v4' => $semester,
-            ':v5' => $kategori_kegiatan,
-            ':v8' => $tempat,
-            ':v9' => $tanggal,
-            ':v10' => $keterangan
-        );
-
-		query_update($sql, $data);
-    }
-
-    public function getData13()
-    {
-		$sql = "SELECT nomor, program, durasi_pengembangan_diri, tahun_ajaran, semester, tempat, tanggal, keterangan FROM DOKUMEN_BIDANG WHERE NOMOR = :v1";
-		$rows = array(':v1' => $_POST['id']);
-
-		$hasil = query_view($sql, $rows);
-		oci_fetch_all($hasil, $rows, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
-
-        // header('Content-type: application/json');
-        http_response_code(200);
-        echo json_encode($rows[0]);
-    }
-
-    public function editData13()
-    {
-        $nomor = $_POST['nomor'];
-        $program = $_POST['program'];
-        $tahun_ajaran = $_POST['tahun_ajaran'];
-        $durasi_pengembangan_diri = $_POST['durasi_pengembangan_diri'];
-        $semester = $_POST['semester'];
-        $tempat = $_POST['tempat'];
-        $tanggal = $_POST['tanggal'];
-        $keterangan = $_POST['keterangan'];
-
-		$sql = "UPDATE dokumen_bidang SET 
-            program = :v2,
-            tahun_ajaran = :v3,
-            semester = :v4,
-            durasi_pengembangan_diri = :v5,
-            tempat = :v8,
-            tanggal = :v9,
-            keterangan = :v10
-        WHERE NOMOR = :v1";
-		$data = array(
-            ':v1' => $nomor,
-            ':v2' => $program,
-            ':v3' => $tahun_ajaran,
-            ':v4' => $semester,
-            ':v5' => $durasi_pengembangan_diri,
             ':v8' => $tempat,
             ':v9' => $tanggal,
             ':v10' => $keterangan

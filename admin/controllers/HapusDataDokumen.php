@@ -9,22 +9,22 @@ class HapusDataDokumen extends Controller
 
     public function hapusDataPendidikan($id)
     {
-        $con = konekDb();
+        global $con;
 
         $sql = "DELETE dokumen_bidang WHERE nomor=:v1";
         $data = array(':v1' => $id);
-        $hasil = query_delete($con, $sql, $data);
+        query_delete($sql, $data);
 
         header('Location: ' . base_url . '/Pendidikan');
     }
 
     public function hapusDataPenunjang($id)
     {
-        $con = konekDb();
+        global $con;
 
         $sql = "DELETE dokumen_bidang WHERE nomor=:v1";
         $data = array(':v1' => $id);
-        $hasil = query_delete($con, $sql, $data);
+        query_delete($sql, $data);
 
         header('Location: ' . base_url . '/Penunjang');
     }

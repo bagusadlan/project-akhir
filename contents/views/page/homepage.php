@@ -42,7 +42,7 @@
                 <a href="<?= base_url; ?>/Pesan" class="list">
                     <span class="material-icons-outlined">email</span>
                     <h3>Pesan</h3>
-                    <span class="message-count">1</span>
+                    <!-- <span class="message-count">1</span> -->
                 </a>
                 <a href="<?= base_url; ?>/Profil" class="list">
                     <span class="material-icons-outlined">person</span>
@@ -92,7 +92,7 @@
                     <div class="middle">
                         <div class="left">
                             <h3>Kekurangan</h3>
-                            <h1>8</h1>
+                            <h1><?= $data['kekuranganAngkaKredit'] ?></h1>
                         </div>
                         <div class="progress">
                             <div id="chart-kekurangan"></div>
@@ -103,15 +103,17 @@
             </div>
             <!-- END OF INSIGHTS -->
 
-            <div class="periode-chart">
-                <h2>Angka Kredit Pendidikan Per Periode</h2>
-                <canvas id="chart"></canvas>
-            </div>
-
-            <div class="periode-chart">
-                <h2>Angka Kredit Penunjang Per Periode</h2>
-                <canvas id="chart"></canvas>
-            </div>
+            <!-- <div class="periode"> -->
+                <div class="periode-chart">
+                    <h2>Angka Kredit Pendidikan Per Periode</h2>
+                    <canvas id="chart"></canvas>
+                </div>
+    
+                <div class="periode-chart">
+                    <h2>Angka Kredit Penunjang Per Periode</h2>
+                    <canvas id="periode-penunjang"></canvas>
+                </div>
+            <!-- </div> -->
         </main>
         <!-- END OF MAIN -->
 
@@ -127,7 +129,11 @@
                 <div class="profile">
                     <div class="info">
                         <p><b><?= $_SESSION['name']; ?></b></p>
-                        <small class="text-muted"><?= $_SESSION['jabfung'] ?></small>
+                        <?php if (isset($_SESSION['jabfung'])) : ?>
+                            <small class="text-muted"><?= $_SESSION['jabfung'] ?></small>
+                        <?php else : ?>
+                            <small class="text-muted"><?= $_SESSION['staff'] ?></small>
+                        <?php endif ?>
                     </div>
                 </div>
             </div>
@@ -136,17 +142,27 @@
                 <h2>Pesan Terbaru</h2>
                 <?php if (count($data['pesan']) > 0) : ?>
                     <div class="updates">
-                        <?php foreach ($data['pesan'] as $pesan) { ?>
-                            <?php if ($pesan['TIPE'] == 'Pendidikan') : ?>
-                                <div class="icon">
-                                    <span class="material-icons-outlined">school</span>
-                                </div>
-                                <div class="message">
-                                    <p><?= $pesan['PESAN'] ?></p>
-                                    <small class="text-muted"><?= date_format(date_create($pesan['CREATED_AT']), "d M Y"); ?></small>
-                                </div>
-                            <?php endif ?>
-                        <?php } ?>
+                        <?php foreach ($data['pesan'] as $pesan) : ?>
+                            <div class="message-column">
+                                <?php if ($pesan['TIPE'] == 'Pendidikan') : ?>
+                                    <div class="icon pendidikan">
+                                        <span class="material-icons-outlined pendidikan">school</span>
+                                    </div>
+                                    <div class="message">
+                                        <p><?= $pesan['PESAN'] ?></p>
+                                        <small class="text-muted"><?= date_format(date_create($pesan['CREATED_AT']), "d M Y"); ?></small>
+                                    </div>
+                                <?php elseif ($pesan['TIPE'] == 'Penunjang') : ?>
+                                    <div class="icon penunjang">
+                                        <span class="material-icons-outlined penunjang">support</span>
+                                    </div>
+                                    <div class="message">
+                                        <p><?= $pesan['PESAN'] ?></p>
+                                        <small class="text-muted"><?= date_format(date_create($pesan['CREATED_AT']), "d M Y"); ?></small>
+                                    </div>
+                                <?php endif ?>
+                            </div>
+                        <?php endforeach ?>
                     </div>
                 <?php else : ?>
                     <div class="updates">
@@ -206,25 +222,38 @@
 <script src="<?= base_url; ?>/js/script.js"></script>
 <script>
     const chart = document.querySelector("#chart").getContext('2d')
+    const periodePenunjang = document.querySelector("#periode-penunjang").getContext('2d')
 
 // create a new chart instance
     new Chart(chart, {
         type: 'line',
         data: {
-            labels: <?= json_encode($data['angkaKreditPerPeriode']) ?>,
+            labels: <?= json_encode($data['periodePendidikan']) ?>,
             datasets: [
                 {
                     label: 'Pendidikan',
                     data: <?= json_encode($data['angkaKreditPendidikanPerPeriode']) ?>,
                     borderColor: '#7380ec',
                     borderWidth: 2
-                },
-                // {
-                //     label: 'Penunjang',
-                //     data: <?= json_encode($data['angkaKreditPenunjangPerPeriode']) ?>,
-                //     borderColor: '#41f1b6',
-                //     borderWidth: 2
-                // }
+                }
+            ]
+        },
+        options: {
+            responsive: true
+        }
+    })
+
+    new Chart(periodePenunjang, {
+        type: 'line',
+        data: {
+            labels: <?= json_encode($data['periodePenunjang']) ?>,
+            datasets: [
+                {
+                    label: 'Penunjang',
+                    data: <?= json_encode($data['angkaKreditPenunjangPerPeriode']) ?>,
+                    borderColor: '#41f1b6',
+                    borderWidth: 2
+                }
             ]
         },
         options: {
@@ -268,13 +297,13 @@
         return options
     }
 
-    var chartPendidikan = new ApexCharts(document.querySelector("#chart-pendidikan"), setOptions('7380ec', 70))
+    var chartPendidikan = new ApexCharts(document.querySelector("#chart-pendidikan"), setOptions('7380ec', <?= $data['persentasePendidikan'] ?>))
     chartPendidikan.render()
     
-    var chartPenunjang = new ApexCharts(document.querySelector("#chart-penunjang"), setOptions('41f1b6', 100))
+    var chartPenunjang = new ApexCharts(document.querySelector("#chart-penunjang"), setOptions('41f1b6', <?= $data['persentasePenunjang'] ?>))
     chartPenunjang.render()
 
-    var chartKekurangan = new ApexCharts(document.querySelector("#chart-kekurangan"), setOptions('ff7782', 20))
+    var chartKekurangan = new ApexCharts(document.querySelector("#chart-kekurangan"), setOptions('ff7782', <?= $data['persentaseKekurangan'] ?>))
     chartKekurangan.render()
 </script>
 </body>

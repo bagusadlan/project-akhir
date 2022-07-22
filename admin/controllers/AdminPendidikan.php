@@ -1,6 +1,6 @@
 <?php
 
-class Pendidikan extends Controller
+class AdminPendidikan extends Controller
 {
     public function __construct()
     {
@@ -9,18 +9,14 @@ class Pendidikan extends Controller
 
     public function index()
     {
-        $data['title'] = 'Pendidikan';
+        $data['title'] = 'Admin Pendidikan';
 
         $data['pendidikan'] = getAllBidangPendidikan();
 
-        $data['angkaKreditPerKategori'] = countAngkaKreditPendidikan()[1];
+        $data['penghitungPendidikan'] = getPenghitungPendidikan();
 
-        $data['allAngkaKredit'] = getAllAngkaKreditPendidikan($_SESSION['nomor']);
-
-        $data['NIP'] = $_SESSION['nomor'];
-        
         $this->view('views/layouts/header', $data);
-        $this->view('views/page/pendidikan', $data);
+        $this->view('views/admin/admin-pendidikan', $data);
         $this->view('views/layouts/footer');
     }
 

@@ -17,16 +17,18 @@ class Penunjang extends Controller
 
         $data['angkaKreditPenunjangPerKategori'] = countAngkaKreditPenunjang()[1][0];
 
-        $data['allAngkaKredit'] = getAllAngkaKredit($_SESSION['nomor']);
+        $data['allAngkaKredit'] = getAllAngkaKreditPenunjang($_SESSION['nomor']);
 
         $this->view('views/layouts/header', $data);
         $this->view('views/page/penunjang', $data);
         $this->view('views/layouts/footer');
     }
 
-    public function show()
+    public function kategoriPenunjang()
     {
-        # code...
+        $data['angkaKreditPerKategori'] = countAngkaKreditPenunjang()[1];
+
+        echo json_encode($data['angkaKreditPerKategori']);
     }
 
     public function store()

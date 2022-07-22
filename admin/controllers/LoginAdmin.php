@@ -22,7 +22,6 @@ class LoginAdmin extends Controller {
 	}
 
 	public function prosesLogin() {
-		
 		$u= $_POST['email'];
         $p =$_POST['password'];
 
@@ -40,21 +39,31 @@ class LoginAdmin extends Controller {
 
 		if($hasil != 'auth error'){
 			if($decode->NIP){
-				$con = konekDb();
+				$getPegawai = getPegawai($decode->NIP);
+				$staff = $getPegawai['KATEGORI_STAFF'];
+				if ($getPegawai['STAFF'] == 4) {
+					$_SESSION['email'] = $u;
+					$_SESSION['name'] =  $decode->Name;
+					$_SESSION['nomor'] = $decode->NIP;
+					
+					$_SESSION['session_login'] = 'true';
+					$_SESSION['staff'] = $staff;
+					$_SESSION['jabfung'] = $getPegawai['JABATAN'];
+	
+					header('location: '. base_url . '/Dashboard');
+				} elseif ($getPegawai['STAFF'] == 19) {
+					$_SESSION['email'] = $u;
+					$_SESSION['name'] =  $decode->Name;
+					$_SESSION['nomor'] = $decode->NIP;
+					
+					$_SESSION['session_login'] = 'true';
+					$_SESSION['staff'] = $staff;
 
-				$staff = getPegawai($con, $decode->NIP)[0];
-
-				$jabfung = getPegawai($con, $decode->NIP)[1];
-
-				$_SESSION['email'] = $u;
-				$_SESSION['name'] =  $decode->Name;
-				$_SESSION['nomor'] = $decode->NIP;
-				
-				$_SESSION['session_login'] = 'true';
-				$_SESSION['staff'] = $staff;
-				$_SESSION['jabfung'] = $jabfung;
-
-				header('location: '. base_url . '/Dashboard');
+					header('location: '. base_url . '/AdminPendidikan');
+				} else {
+					Flasher::setMessage('Username / Password','salah.','danger');
+					header('location: '. base_url . '/LoginAdmin');
+			}
 			}else{
 				Flasher::setMessage('Username / Password','salah.','danger');
 				header('location: '. base_url . '/LoginAdmin');

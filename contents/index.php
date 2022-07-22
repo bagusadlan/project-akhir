@@ -8,6 +8,7 @@ require "../includes/countAngkaKreditPendidikan.php";
 require "../includes/countAngkaKreditPenunjang.php";
 require "../includes/getAllAngkaKredit.php";
 require "../includes/getAllBidang.php";
+require "../includes/getPenghitung.php";
 
 require_once '../includes/init.php';
 

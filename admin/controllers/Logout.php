@@ -8,6 +8,8 @@ class Logout {
 		unset($_SESSION['name']);
 		unset($_SESSION['nomor']);
 		unset($_SESSION['staff']);
+		unset($_SESSION['jabfung']);
+		// unset($_SESSION);
 
 		header('location: '. base_url . '/LoginAdmin');
 	}

@@ -21,10 +21,10 @@ class LoginAdmin extends Controller {
 	    $this->view('views/partials/footer');
 	}
 
-	public function getPegawai($con,$nip){
+	public function getPegawai($nip){
 			$sqlPegawai = "SELECT * FROM PEGAWAI WHERE NIP=:v1";
 			$nomorNip = array(':v1' =>  $nip);
-			$pegawai = query_view($con, $sqlPegawai, $nomorNip);
+			$pegawai = query_view($sqlPegawai, $nomorNip);
 			
 			oci_fetch_all($pegawai, $rowPegawai, 0, 0, OCI_FETCHSTATEMENT_BY_ROW);
 			
@@ -35,11 +35,11 @@ class LoginAdmin extends Controller {
 			return $tmpStaff;
 	}
 
-	public function getStaff($con,$staff){
+	public function getStaff($staff){
 		// echo $staff;
 			$sqlStaff = "SELECT * FROM STAFF WHERE NOMOR=:v1";
 			$nomorStaff = array(':v1' =>  $staff);
-			$staff = query_view($con, $sqlStaff, $nomorStaff);
+			$staff = query_view($sqlStaff, $nomorStaff);
 			
 			oci_fetch_all($staff, $rowStaff, 0, 0, OCI_FETCHSTATEMENT_BY_ROW);
 		

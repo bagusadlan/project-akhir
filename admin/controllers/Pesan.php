@@ -11,6 +11,8 @@ class Pesan extends Controller
     {
         $data['title'] = 'Pesan';
 
+        $data['pesan'] = getPesan();
+
         $this->view('views/layouts/header', $data);
         $this->view('views/page/pesan', $data);
         $this->view('views/layouts/footer');

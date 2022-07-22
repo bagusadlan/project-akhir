@@ -14,8 +14,6 @@ class InputDataKumPendidikan extends Controller
 
     public function inputData1()
     {
-        $con = konekDb();
-
         $nomor_bidang = 1;
         $nip = $_POST['nip'];
         $program = $_POST['program'];
@@ -31,7 +29,7 @@ class InputDataKumPendidikan extends Controller
         $sql = "INSERT INTO DOKUMEN_BIDANG (NOMOR, NOMOR_BIDANG, NIP, PROGRAM, TAHUN_AJARAN, SEMESTER, MATA_KULIAH, KELAS, SKS, TEMPAT, TANGGAL, KETERANGAN) VALUES (BIDANG_DOKUMEN_SEQ.NEXTVAL, :v1, :v2, :v3, :v4, :v5, :v6, :v7, :v8, :v9, :v10, :v11)";
         $data = array(':v1' => $nomor_bidang, ':v2' => $nip, ':v3' => $program, ':v4' => $tahun_ajaran, ':v5' => $semester, ':v6' => $mata_kuliah,':v7' => $kelas,':v8' => $sks,':v9' => $tempat,':v10' => $tanggal,':v11' => $keterangan);
 
-        $hasil = query_insert($con, $sql, $data);
+        $hasil = query_insert($sql, $data);
 
         
         
@@ -42,8 +40,6 @@ class InputDataKumPendidikan extends Controller
 
     public function inputData2()
     {
-        $con = konekDb();
-
         $nomor_bidang = 2;
         $nip = $_POST['nip'];
         $program = $_POST['program'];
@@ -56,7 +52,7 @@ class InputDataKumPendidikan extends Controller
         $sql = "INSERT INTO DOKUMEN_BIDANG (NOMOR, NOMOR_BIDANG, NIP, PROGRAM, TAHUN_AJARAN, SEMESTER, TEMPAT, TANGGAL, KETERANGAN) VALUES (BIDANG_DOKUMEN_SEQ.NEXTVAL, :v1, :v2, :v3, :v4, :v5, :v6, :v7, :v8)";
         $data = array(':v1' => $nomor_bidang, ':v2' => $nip, ':v3' => $program, ':v4' => $tahun_ajaran, ':v5' => $semester,':v6' => $tempat,':v7' => $tanggal,':v8' => $keterangan);
 
-        $hasil = query_insert($con, $sql, $data);
+        $hasil = query_insert($sql, $data);
 
         
         header('Content-type: application/json');
@@ -66,8 +62,6 @@ class InputDataKumPendidikan extends Controller
 
     public function inputData3()
     {
-        $con = konekDb();
-
         $nomor_bidang = 3;
         $nip = $_POST['nip'];
         $program = $_POST['program'];
@@ -81,7 +75,7 @@ class InputDataKumPendidikan extends Controller
         $sql = "INSERT INTO DOKUMEN_BIDANG (NOMOR, NOMOR_BIDANG, NIP, PROGRAM, NAMA_PERUSAHAAN, TAHUN_AJARAN, SEMESTER, TEMPAT, TANGGAL, KETERANGAN) VALUES (BIDANG_DOKUMEN_SEQ.NEXTVAL, :v1, :v2, :v3, :v4, :v5, :v6, :v7, :v8, :v9)";
         $data = array(':v1' => $nomor_bidang, ':v2' => $nip, ':v3' => $program, ':v4' => $nama_perusahaan, ':v5' => $tahun_ajaran, ':v6' => $semester,':v7' => $tempat,':v8' => $tanggal,':v9' => $keterangan);
 
-        $hasil = query_insert($con, $sql, $data);
+        $hasil = query_insert($sql, $data);
 
         header('Content-type: application/json');
         http_response_code(200);
@@ -90,8 +84,6 @@ class InputDataKumPendidikan extends Controller
 
     public function inputData4()
     {
-        $con = konekDb();
-
         $nomor_bidang = 4;
         $nip = $_POST['nip'];
         $program = $_POST['program'];
@@ -107,7 +99,7 @@ class InputDataKumPendidikan extends Controller
         $sql = "INSERT INTO DOKUMEN_BIDANG (NOMOR, NOMOR_BIDANG, NIP, PROGRAM, KATEGORI_PEMBIMBING, NAMA_MAHASISWA, JENIS_TUGASAKHIR, TAHUN_AJARAN, SEMESTER, TEMPAT, TANGGAL, KETERANGAN) VALUES (BIDANG_DOKUMEN_SEQ.NEXTVAL, :v1, :v2, :v3, :v4, :v5, :v6, :v7, :v8, :v9, :v10, :v11)";
         $data = array(':v1' => $nomor_bidang, ':v2' => $nip, ':v3' => $program, ':v4' => $kategori_pembimbing, ':v5' => $nama_mahasiswa, ':v6' => $jenis_tugasakhir, ':v7' => $tahun_ajaran, ':v8' => $semester,':v9' => $tempat,':v10' => $tanggal,':v11' => $keterangan);
 
-        $hasil = query_insert($con, $sql, $data);
+        $hasil = query_insert($sql, $data);
 
         header('Content-type: application/json');
         http_response_code(200);
@@ -116,8 +108,6 @@ class InputDataKumPendidikan extends Controller
 
     public function inputData5()
     {
-        $con = konekDb();
-
         $nomor_bidang = 5;
         $nip = $_POST['nip'];
         $program = $_POST['program'];
@@ -132,7 +122,7 @@ class InputDataKumPendidikan extends Controller
         $sql = "INSERT INTO DOKUMEN_BIDANG (NOMOR, NOMOR_BIDANG, NIP, PROGRAM, KATEGORI_PENGUJI, NAMA_MAHASISWA, TAHUN_AJARAN, SEMESTER, TEMPAT, TANGGAL, KETERANGAN) VALUES (BIDANG_DOKUMEN_SEQ.NEXTVAL, :v1, :v2, :v3, :v4, :v5, :v6, :v7, :v8, :v9, :v10)";
         $data = array(':v1' => $nomor_bidang, ':v2' => $nip, ':v3' => $program, ':v4' => $kategori_penguji, ':v5' => $nama_mahasiswa, ':v6' => $tahun_ajaran, ':v7' => $semester,':v8' => $tempat,':v9' => $tanggal,':v10' => $keterangan);
 
-        $hasil = query_insert($con, $sql, $data);
+        $hasil = query_insert($sql, $data);
 
         header('Content-type: application/json');
         http_response_code(200);
@@ -141,8 +131,6 @@ class InputDataKumPendidikan extends Controller
 
     public function inputData6()
     {
-        $con = konekDb();
-
         $nomor_bidang = 6;
         $nip = $_POST['nip'];
         $program = $_POST['program'];
@@ -155,7 +143,7 @@ class InputDataKumPendidikan extends Controller
         $sql = "INSERT INTO DOKUMEN_BIDANG (NOMOR, NOMOR_BIDANG, NIP, PROGRAM, TAHUN_AJARAN, SEMESTER, TEMPAT, TANGGAL, KETERANGAN) VALUES (BIDANG_DOKUMEN_SEQ.NEXTVAL, :v1, :v2, :v3, :v4, :v5, :v6, :v7, :v8)";
         $data = array(':v1' => $nomor_bidang, ':v2' => $nip, ':v3' => $program, ':v4' => $tahun_ajaran, ':v5' => $semester,':v6' => $tempat,':v7' => $tanggal,':v8' => $keterangan);
 
-        $hasil = query_insert($con, $sql, $data);
+        $hasil = query_insert($sql, $data);
 
         header('Content-type: application/json');
         http_response_code(200);
@@ -164,8 +152,6 @@ class InputDataKumPendidikan extends Controller
 
     public function inputData7()
     {
-        $con = konekDb();
-
         $nomor_bidang = 7;
         $nip = $_POST['nip'];
         $program = $_POST['program'];
@@ -179,7 +165,7 @@ class InputDataKumPendidikan extends Controller
         $sql = "INSERT INTO DOKUMEN_BIDANG (NOMOR, NOMOR_BIDANG, NIP, PROGRAM, NAMA_PRODUK, TAHUN_AJARAN, SEMESTER, TEMPAT, TANGGAL, KETERANGAN) VALUES (BIDANG_DOKUMEN_SEQ.NEXTVAL, :v1, :v2, :v3, :v4, :v5, :v6, :v7, :v8, :v9)";
         $data = array(':v1' => $nomor_bidang, ':v2' => $nip, ':v3' => $program, ':v4' => $nama_produk, ':v5' => $tahun_ajaran, ':v6' => $semester,':v7' => $tempat,':v8' => $tanggal,':v9' => $keterangan);
 
-        $hasil = query_insert($con, $sql, $data);
+        $hasil = query_insert($sql, $data);
 
         header('Content-type: application/json');
         http_response_code(200);
@@ -188,8 +174,6 @@ class InputDataKumPendidikan extends Controller
 
     public function inputData8()
     {
-        $con = konekDb();
-
         $nomor_bidang = 8;
         $nip = $_POST['nip'];
         $program = $_POST['program'];
@@ -204,7 +188,7 @@ class InputDataKumPendidikan extends Controller
         $sql = "INSERT INTO DOKUMEN_BIDANG (NOMOR, NOMOR_BIDANG, NIP, PROGRAM, JENIS_PRODUK, JUDUL_BAHAN_AJAR, TAHUN_AJARAN, SEMESTER, TEMPAT, TANGGAL, KETERANGAN) VALUES (BIDANG_DOKUMEN_SEQ.NEXTVAL, :v1, :v2, :v3, :v4, :v5, :v6, :v7, :v8, :v9, :v10)";
         $data = array(':v1' => $nomor_bidang, ':v2' => $nip, ':v3' => $program, ':v4' => $jenis_produk, ':v5' => $judul_bahan_ajar, ':v6' => $tahun_ajaran, ':v7' => $semester,':v8' => $tempat,':v9' => $tanggal,':v10' => $keterangan);
 
-        $hasil = query_insert($con, $sql, $data);
+        $hasil = query_insert($sql, $data);
 
         header('Content-type: application/json');
         http_response_code(200);
@@ -213,8 +197,6 @@ class InputDataKumPendidikan extends Controller
 
     public function inputData9()
     {
-        $con = konekDb();
-
         $nomor_bidang = 9;
         $nip = $_POST['nip'];
         $program = $_POST['program'];
@@ -228,7 +210,7 @@ class InputDataKumPendidikan extends Controller
         $sql = "INSERT INTO DOKUMEN_BIDANG (NOMOR, NOMOR_BIDANG, NIP, PROGRAM, NAMA_ORASI_ILMIAH, TAHUN_AJARAN, SEMESTER, TEMPAT, TANGGAL, KETERANGAN) VALUES (BIDANG_DOKUMEN_SEQ.NEXTVAL, :v1, :v2, :v3, :v4, :v5, :v6, :v7, :v8, :v9)";
         $data = array(':v1' => $nomor_bidang, ':v2' => $nip, ':v3' => $program, ':v4' => $nama_orasi_ilmiah, ':v5' => $tahun_ajaran, ':v6' => $semester, ':v7' => $tempat,':v8' => $tanggal,':v9' => $keterangan);
 
-        $hasil = query_insert($con, $sql, $data);
+        $hasil = query_insert($sql, $data);
 
         header('Content-type: application/json');
         http_response_code(200);
@@ -237,8 +219,6 @@ class InputDataKumPendidikan extends Controller
 
     public function inputData10()
     {
-        $con = konekDb();
-
         $nomor_bidang = 10;
         $nip = $_POST['nip'];
         $jabatan_pimpinan = $_POST['jabatan_pimpinan'];
@@ -251,7 +231,7 @@ class InputDataKumPendidikan extends Controller
         $sql = "INSERT INTO DOKUMEN_BIDANG (NOMOR, NOMOR_BIDANG, NIP, JABATAN_PIMPINAN, TAHUN_AJARAN, SEMESTER, TEMPAT, TANGGAL, KETERANGAN) VALUES (BIDANG_DOKUMEN_SEQ.NEXTVAL, :v1, :v2, :v3, :v4, :v5, :v6, :v7, :v8)";
         $data = array(':v1' => $nomor_bidang, ':v2' => $nip, ':v3' => $jabatan_pimpinan, ':v4' => $tahun_ajaran, ':v5' => $semester, ':v6' => $tempat, ':v7' => $tanggal, ':v8' => $keterangan);
 
-        $hasil = query_insert($con, $sql, $data);
+        $hasil = query_insert($sql, $data);
 
         header('Content-type: application/json');
         http_response_code(200);
@@ -260,8 +240,6 @@ class InputDataKumPendidikan extends Controller
 
     public function inputData11()
     {
-        $con = konekDb();
-
         $nomor_bidang = 11;
         $nip = $_POST['nip'];
         $program = $_POST['program'];
@@ -275,7 +253,7 @@ class InputDataKumPendidikan extends Controller
         $sql = "INSERT INTO DOKUMEN_BIDANG (NOMOR, NOMOR_BIDANG, NIP, PROGRAM, KATEGORI_PEMBIMBING_DOSEN, TAHUN_AJARAN, SEMESTER, TEMPAT, TANGGAL, KETERANGAN) VALUES (BIDANG_DOKUMEN_SEQ.NEXTVAL, :v1, :v2, :v3, :v4, :v5, :v6, :v7, :v8, :v9)";
         $data = array(':v1' => $nomor_bidang, ':v2' => $nip, ':v3' => $program, ':v4' => $kategori_pembimbing_dosen, ':v5' => $tahun_ajaran, ':v6' => $semester, ':v7' => $tempat,':v8' => $tanggal,':v9' => $keterangan);
 
-        $hasil = query_insert($con, $sql, $data);
+        $hasil = query_insert($sql, $data);
 
         header('Content-type: application/json');
         http_response_code(200);
@@ -284,8 +262,6 @@ class InputDataKumPendidikan extends Controller
 
     public function inputData12()
     {
-        $con = konekDb();
-
         $nomor_bidang = 12;
         $nip = $_POST['nip'];
         $program = $_POST['program'];
@@ -299,7 +275,7 @@ class InputDataKumPendidikan extends Controller
         $sql = "INSERT INTO DOKUMEN_BIDANG (NOMOR, NOMOR_BIDANG, NIP, PROGRAM, KATEGORI_KEGIATAN, TAHUN_AJARAN, SEMESTER, TEMPAT, TANGGAL, KETERANGAN) VALUES (BIDANG_DOKUMEN_SEQ.NEXTVAL, :v1, :v2, :v3, :v4, :v5, :v6, :v7, :v8, :v9)";
         $data = array(':v1' => $nomor_bidang, ':v2' => $nip, ':v3' => $program, ':v4' => $kategori_kegiatan, ':v5' => $tahun_ajaran, ':v6' => $semester, ':v7' => $tempat,':v8' => $tanggal,':v9' => $keterangan);
 
-        $hasil = query_insert($con, $sql, $data);
+        $hasil = query_insert($sql, $data);
 
         header('Content-type: application/json');
         http_response_code(200);
@@ -308,8 +284,6 @@ class InputDataKumPendidikan extends Controller
 
     public function inputData13()
     {
-        $con = konekDb();
-
         $nomor_bidang = 13;
         $nip = $_POST['nip'];
         $program = $_POST['program'];
@@ -323,7 +297,7 @@ class InputDataKumPendidikan extends Controller
         $sql = "INSERT INTO DOKUMEN_BIDANG (NOMOR, NOMOR_BIDANG, NIP, PROGRAM, DURASI_PENGEMBANGAN_DIRI, TAHUN_AJARAN, SEMESTER, TEMPAT, TANGGAL, KETERANGAN) VALUES (BIDANG_DOKUMEN_SEQ.NEXTVAL, :v1, :v2, :v3, :v4, :v5, :v6, :v7, :v8, :v9)";
         $data = array(':v1' => $nomor_bidang, ':v2' => $nip, ':v3' => $program, ':v4' => $durasi_pengembangan_diri, ':v5' => $tahun_ajaran, ':v6' => $semester, ':v7' => $tempat,':v8' => $tanggal,':v9' => $keterangan);
 
-        $hasil = query_insert($con, $sql, $data);
+        $hasil = query_insert($sql, $data);
 
         header('Content-type: application/json');
         http_response_code(200);

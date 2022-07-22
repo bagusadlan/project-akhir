@@ -52,9 +52,8 @@
 			'year' => [],
 			'kredit' => []
 		];
+
 		$kreditPeriode = [];
-		// $arrayTahun = [];
-		// $arrayKredit = [];
 
 		$data['totalAngkaKreditPendidikan'] = array_sum($total);
 
@@ -63,6 +62,8 @@
 		$data['arrayPerPeriode'] = $data['arrayPerPeriode'][0];
 
 		$data['angkaKreditPerPeriode'] = array_merge_recursive($periode[1], $periode[2], $periode[3], $periode[4], $periode[5], $periode[6], $periode[7], $periode[8], $periode[9], $periode[10], $periode[11], $periode[12], $periode[13]);
+
+		ksort($data['angkaKreditPerPeriode']);
 
 		foreach ($data['angkaKreditPerPeriode'] as $tahunAjaran => $angkaKredit) {
 			if (is_array($angkaKredit)) {
@@ -74,13 +75,35 @@
 			array_push($groupPeriode['kredit'], $kreditPeriode);
 		}
 
-		if ($data['totalAngkaKreditPendidikan'] >= 73) {
-			$con = konekDb();
+		if ($_SESSION['jabfung'] == 'Asisten Ahli') {
+            $kumMinimal = 150;
+            $angkaKredit = 150;
+            $angkaKreditSyarat = 50;
+            $persentasePendidikan = 55;
+        } elseif ($_SESSION['jabfung'] == 'Lektor') {
+            $kumMinimal = 200;
+            $angkaKredit = 200;
+            $angkaKreditSyarat = 200;
+            $persentasePendidikan = 45;
+        } elseif ($_SESSION['jabfung'] == 'Lektor Kepala') {
+            $kumMinimal = 400;
+            $angkaKredit = 400;
+            $angkaKreditSyarat = 450;
+            $persentasePendidikan = 40;
+        } elseif ($_SESSION['jabfung'] == 'Guru Besar') {
+            $kumMinimal = 850;
+            $angkaKredit = 850;
+            $persentasePendidikan = 35;
+        }
+		$pendidikanMinimal = $persentasePendidikan/100 * $angkaKreditSyarat;
+
+		if ($data['totalAngkaKreditPendidikan'] >= $pendidikanMinimal) {
+			global $con;
 			$nip = $_SESSION['nomor'];
 
 			$sql = "SELECT * FROM pesan WHERE nip=:v1 AND TIPE = 'Pendidikan'";
 			$bind = array(':v1' => $nip);
-			$hasil = query_view($con, $sql, $bind);
+			$hasil = query_view($sql, $bind);
 
 			oci_fetch_all($hasil, $pesan, 0, 0, OCI_FETCHSTATEMENT_BY_ROW);
 			
@@ -95,7 +118,7 @@
 				
 				$sql = "INSERT INTO PESAN (NOMOR, NIP, PESAN, TIPE) values (PESAN_SEQ.NEXTVAL, :v1, :v2, 'Pendidikan')";
 				$bind = array(':v1' => $nip, ':v2' => $pesan);
-				$hasil = query_insert($con, $sql, $bind);
+				$hasil = query_insert($sql, $bind);
 			}
 		}
 
@@ -109,12 +132,11 @@
 	}
 
 	function getPesan() {
-		$con = konekDb();
 		$nip = $_SESSION['nomor'];
 
 		$sql = "SELECT * FROM pesan WHERE nip=:v1";
 		$bind = array(':v1' => $nip);
-		$hasil = query_view($con, $sql, $bind);
+		$hasil = query_view($sql, $bind);
 
 		oci_fetch_all($hasil, $pesan, 0, 0, OCI_FETCHSTATEMENT_BY_ROW);
 
@@ -139,14 +161,12 @@
 		$group = null;
 		$totalAngkaKredit = [];
 
-		$con = konekDb();
 		$sql = "SELECT tahun_ajaran, semester, sks, tanggal FROM DOKUMEN_BIDANG WHERE NIP = :v1 AND NOMOR_BIDANG = 1 ORDER BY TAHUN_AJARAN, SEMESTER, TANGGAL";
 		$rows = array(':v1' => $nip);
-		$hasil = query_view($con, $sql, $rows);
+		$hasil = query_view($sql, $rows);
 		oci_fetch_all($hasil, $rows, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
 		
 		foreach ($rows as $row) {
-			// $dataPerTanggal[] = $row['TANGGAL'];
 			$group[$row['TAHUN_AJARAN']][$row['SEMESTER']][] = 0 + $row['SKS'];
 			foreach ($group as $tahunAjaran => $arraySemester) {
 				$angkaKreditPerPeriode[$tahunAjaran] = [];
@@ -158,6 +178,7 @@
 					foreach ($number as $index) {
 						$count += $index;
 					}
+					
 					array_push($angkaKreditPerPeriode[$tahunAjaran], $count);
 					$result[$tahunAjaran][$semester] = $count;
 				}
@@ -214,10 +235,9 @@
 
 	function countDataA22($nip)
 	{
-		$con = konekDb();
 		$sql = "SELECT tahun_ajaran, semester, tanggal FROM DOKUMEN_BIDANG WHERE NIP = :v1 AND NOMOR_BIDANG = 2 ORDER BY TAHUN_AJARAN, SEMESTER, TANGGAL";
 		$rows = array(':v1' => $nip);
-		$hasil = query_view($con, $sql, $rows);
+		$hasil = query_view($sql, $rows);
 		oci_fetch_all($hasil, $rows, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
 
 		foreach ($rows as $row) {
@@ -255,10 +275,9 @@
 
 	function countDataA23($nip)
 	{
-		$con = konekDb();
 		$sql = "SELECT tahun_ajaran, semester, tanggal FROM DOKUMEN_BIDANG WHERE NIP = :v1 AND NOMOR_BIDANG = 3 ORDER BY TAHUN_AJARAN, SEMESTER, TANGGAL";
 		$rows = array(':v1' => $nip);
-		$hasil = query_view($con, $sql, $rows);
+		$hasil = query_view($sql, $rows);
 		oci_fetch_all($hasil, $rows, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
 
 		foreach ($rows as $row) {
@@ -297,10 +316,9 @@
 		$group = null;
 		$totalAngkaKredit = [];
 	
-		$con = konekDb();
 		$sql = "SELECT KATEGORI_PEMBIMBING, JENIS_TUGASAKHIR, TAHUN_AJARAN, SEMESTER, TANGGAL FROM DOKUMEN_BIDANG WHERE NIP = :v1 AND NOMOR_BIDANG = 4 ORDER BY TAHUN_AJARAN, SEMESTER, TANGGAL";
 		$rows = array(':v1' => $nip);
-		$hasil = query_view($con, $sql, $rows);
+		$hasil = query_view($sql, $rows);
 		oci_fetch_all($hasil, $rows, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
 
 		foreach ($rows as $row) {
@@ -389,10 +407,9 @@
 	{
 		$totalAngkaKredit = [];
 
-		$con = konekDb();
 		$sql = "SELECT KATEGORI_PENGUJI, TAHUN_AJARAN, SEMESTER, NAMA_MAHASISWA, TANGGAL FROM DOKUMEN_BIDANG WHERE NIP = :v1 AND NOMOR_BIDANG = 5 ORDER BY TAHUN_AJARAN, SEMESTER, TANGGAL";
 		$rows = array(':v1' => $nip);
-		$hasil = query_view($con, $sql, $rows);
+		$hasil = query_view($sql, $rows);
 		oci_fetch_all($hasil, $rows, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
 
 		foreach ($rows as $row) {
@@ -454,10 +471,9 @@
 	{
 		$totalAngkaKredit = [];
 
-		$con = konekDb();
 		$sql = "SELECT tahun_ajaran, semester, tanggal FROM DOKUMEN_BIDANG WHERE NIP = :v1 AND NOMOR_BIDANG = 6 ORDER BY TAHUN_AJARAN, SEMESTER, TANGGAL";
 		$rows = array(':v1' => $nip);
-		$hasil = query_view($con, $sql, $rows);
+		$hasil = query_view($sql, $rows);
 		oci_fetch_all($hasil, $rows, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
 
 		foreach ($rows as $row) {
@@ -502,10 +518,9 @@
 	{
 		$totalAngkaKredit = [];
 
-		$con = konekDb();
 		$sql = "SELECT tahun_ajaran, semester, tanggal FROM DOKUMEN_BIDANG WHERE NIP = :v1 AND NOMOR_BIDANG = 7 ORDER BY TAHUN_AJARAN , SEMESTER, TANGGAL";
 		$rows = array(':v1' => $nip);
-		$hasil = query_view($con, $sql, $rows);
+		$hasil = query_view($sql, $rows);
 		oci_fetch_all($hasil, $rows, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
 
 		foreach ($rows as $row) {
@@ -548,10 +563,9 @@
 	{
 		$totalAngkaKredit = [];
 	
-		$con = konekDb();
 		$sql = "SELECT tahun_ajaran, semester, jenis_produk, tanggal FROM DOKUMEN_BIDANG WHERE NIP = :v1 AND NOMOR_BIDANG = 8 ORDER BY TAHUN_AJARAN, SEMESTER, TANGGAL";
 		$rows = array(':v1' => $nip);
-		$hasil = query_view($con, $sql, $rows);
+		$hasil = query_view($sql, $rows);
 		oci_fetch_all($hasil, $rows, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
 
 		foreach ($rows as $row) {
@@ -611,10 +625,9 @@
 		$totalAngkaKredit = [];
 		$dataPerTanggal = [];
 	
-		$con = konekDb();
 		$sql = "SELECT tahun_ajaran, semester, tanggal FROM DOKUMEN_BIDANG WHERE NIP = :v1 AND NOMOR_BIDANG = 9 ORDER BY TAHUN_AJARAN, SEMESTER, TANGGAL";
 		$rows = array(':v1' => $nip);
-		$hasil = query_view($con, $sql, $rows);
+		$hasil = query_view($sql, $rows);
 		oci_fetch_all($hasil, $rows, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
 
 		foreach ($rows as $row) {
@@ -668,10 +681,9 @@
 	{
 		$totalAngkaKredit = [];
 	
-		$con = konekDb();
 		$sql = "SELECT tahun_ajaran, semester, jabatan_pimpinan, tanggal FROM DOKUMEN_BIDANG WHERE NIP = :v1 AND NOMOR_BIDANG = 10 ORDER BY TAHUN_AJARAN, SEMESTER, TANGGAL";
 		$rows = array(':v1' => $nip);
-		$hasil = query_view($con, $sql, $rows);
+		$hasil = query_view($sql, $rows);
 		oci_fetch_all($hasil, $rows, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
 
 		foreach ($rows as $row) {
@@ -736,10 +748,9 @@
 	{
 		$totalAngkaKredit = [];
 	
-		$con = konekDb();
 		$sql = "SELECT tahun_ajaran, semester, kategori_pembimbing_dosen, tanggal FROM DOKUMEN_BIDANG WHERE NIP = :v1 AND NOMOR_BIDANG = 11 ORDER BY TAHUN_AJARAN, SEMESTER, TANGGAL";
 		$rows = array(':v1' => $nip);
-		$hasil = query_view($con, $sql, $rows);
+		$hasil = query_view($sql, $rows);
 		oci_fetch_all($hasil, $rows, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
 
 		foreach ($rows as $row) {
@@ -798,10 +809,9 @@
 	{
 		$totalAngkaKredit = [];
 	
-		$con = konekDb();
 		$sql = "SELECT tahun_ajaran, semester, kategori_kegiatan, tanggal FROM DOKUMEN_BIDANG WHERE NIP = :v1 AND NOMOR_BIDANG = 12 ORDER BY TAHUN_AJARAN, SEMESTER, TANGGAL";
 		$rows = array(':v1' => $nip);
-		$hasil = query_view($con, $sql, $rows);
+		$hasil = query_view($sql, $rows);
 		oci_fetch_all($hasil, $rows, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
 		
 		foreach ($rows as $row) {
@@ -863,10 +873,9 @@
 	{
 		$totalAngkaKredit = [];
 	
-		$con = konekDb();
 		$sql = "SELECT tahun_ajaran, semester, durasi_pengembangan_diri, tanggal FROM DOKUMEN_BIDANG WHERE NIP = :v1 AND NOMOR_BIDANG = 13 ORDER BY TAHUN_AJARAN, SEMESTER, TANGGAL";
 		$rows = array(':v1' => $nip);
-		$hasil = query_view($con, $sql, $rows);
+		$hasil = query_view($sql, $rows);
 		oci_fetch_all($hasil, $rows, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
 		
 		foreach ($rows as $row) {

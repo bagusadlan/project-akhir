@@ -78,3 +78,30 @@ git status
 git remote add origin https://github.com/bagusadlan/project-akhir.git
 clear
 exit
+git remote add origin https://github.com/bagusadlan/project-akhir.git
+git remote add origin https://github.com/bagusadlan/project-akhir.git
+git status
+git branch -M main
+git branch
+git status
+git add .
+git status
+git branch
+git branch -r
+git branch -a
+git branch -M main
+git status
+git commit -M "Menyelesaikan penghitungan pendidikan"
+git commit -m "Menyelesaikan penghitungan pendidikan"
+git config --global user.name "bagusadlan"
+git commit -m "Menyelesaikan penghitungan pendidikan"
+git status
+git add .
+git status
+git commit -m "Menambah file .gitconfig"
+git status
+git branch
+git branch -r
+git branch -a
+git push -u origin main
+git push

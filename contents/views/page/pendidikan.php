@@ -47,7 +47,7 @@
                 <div class="modal-body">
                     <div class="body-header">
                         <button class="add-button mb-1" data-id="<?= $i ?>">Tambah Data</button>
-                        <h2 class="angka-kredit-modal">Angka Kredit : <?= $data['angkaKreditPerKategori'][$i] ?></h2>
+                        <h2 class="angka-kredit-modal">Angka Kredit : <span id="modal-angka-kredit-perkategori<?= $i ?>"><?= $data['angkaKreditPerKategori'][$i] ?></span></h2>
                     </div>
                     <table>
                         <thead>
@@ -102,46 +102,46 @@
                                     <?php else : ?>
                                         <td class=""><?= $n ?></td>
                                     <?php if ($rows['NOMOR'] != 10) : ?>
-                                        <td><?= $detail[1] ?></td>
+                                        <td><?= $detail['PROGRAM'] ?></td>
                                     <?php endif ?>
                                     <?php if ($rows['NOMOR'] == 1) : ?>
-                                        <td><?= $detail[7] ?></td>
-                                        <td><?= $detail[8] ?></td>
-                                        <td><?= $detail[9] ?></td>
+                                        <td><?= $detail['MATA_KULIAH'] ?></td>
+                                        <td><?= $detail['KELAS'] ?></td>
+                                        <td><?= $detail['SKS'] ?></td>
                                     <?php elseif ($rows['NOMOR'] == 3) : ?>
-                                        <td><?= $detail[10] ?></td>
+                                        <td><?= $detail['NAMA_PERUSAHAAN'] ?></td>
                                     <?php elseif ($rows['NOMOR'] == 4) : ?>
-                                        <td><?= $detail[11] ?></td>
-                                        <td><?= $detail[12] ?></td>
-                                        <td><?= $detail[13] ?></td>
+                                        <td><?= $detail['KATEGORI_PEMBIMBING'] ?></td>
+                                        <td><?= $detail['NAMA_MAHASISWA'] ?></td>
+                                        <td><?= $detail['JENIS_TUGASAKHIR'] ?></td>
                                     <?php elseif ($rows['NOMOR'] == 5) : ?>
-                                        <td><?= $detail[14] ?></td>
-                                        <td><?= $detail[12] ?></td>
+                                        <td><?= $detail['KATEGORI_PENGUJI'] ?></td>
+                                        <td><?= $detail['NAMA_MAHASISWA'] ?></td>
                                     <?php elseif ($rows['NOMOR'] == 7) : ?>
-                                        <td><?= $detail[15] ?></td>
+                                        <td><?= $detail['NAMA_PRODUK'] ?></td>
                                     <?php elseif ($rows['NOMOR'] == 8) : ?>
-                                        <td><?= $detail[16] ?></td>
-                                        <td><?= $detail[17] ?></td>
+                                        <td><?= $detail['JENIS_PRODUK'] ?></td>
+                                        <td><?= $detail['JUDUL_BAHAN_AJAR'] ?></td>
                                     <?php elseif ($rows['NOMOR'] == 9) : ?>
-                                        <td><?= $detail[18] ?></td>
+                                        <td><?= $detail['NAMA_ORASI_ILMIAH'] ?></td>
                                     <?php elseif ($rows['NOMOR'] == 10) : ?>
-                                        <td><?= $detail[19] ?></td>
+                                        <td><?= $detail['JABATAN_PIMPINAN'] ?></td>
                                     <?php elseif ($rows['NOMOR'] == 11) : ?>
-                                        <td><?= $detail[20] ?></td>
+                                        <td><?= $detail['KATEGORI_PEMBIMBING_DOSEN'] ?></td>
                                     <?php elseif ($rows['NOMOR'] == 12) : ?>
-                                        <td><?= $detail[21] ?></td>
+                                        <td><?= $detail['KATEGORI_KEGIATAN'] ?></td>
                                     <?php elseif ($rows['NOMOR'] == 13) : ?>
-                                        <td><?= $detail[12] ?></td>
+                                        <td><?= $detail['DURASI_PENGEMBANGAN_DIRI'] ?></td>
                                         <?php endif ?>
                                     <?php endif ?>
-                                    <td><?= $detail[2] ?></td>
-                                    <td><?= $detail[3] ?></td>
-                                    <td><?= $detail[4] ?></td>
-                                    <td><?= $detail[5] ?></td>
-                                    <td><?= $detail[6] ?></td>
+                                    <td><?= $detail['TAHUN_AJARAN'] ?></td>
+                                    <td><?= $detail['SEMESTER'] ?></td>
+                                    <td><?= $detail['TEMPAT'] ?></td>
+                                    <td><?= $detail['TANGGAL'] ?></td>
+                                    <td><?= $detail['KETERANGAN'] ?></td>
                                     <td>
-                                        <button data-id="<?= $detail[0] ?>" data-id-bidang="<?= $k + 1 ?>" class="edit-button button">Edit</button>
-                                        <button data-id="<?= $detail[0] ?>" class="delete-button button" onclick="deleteData('<?= base_url ?>/HapusDataDokumen/hapusDataPendidikan/<?= $detail[0] ?>', <?= $k + 1 ?>)">Hapus</button>
+                                        <button data-id="<?= $detail['NOMOR'] ?>" data-id-bidang="<?= $k + 1 ?>" class="edit-button primary-button">Edit</button>
+                                        <button data-id="<?= $detail['NOMOR'] ?>" class="delete-button button" onclick="deleteData('<?= base_url ?>/HapusDataDokumen/hapusDataPendidikan/<?= $detail['NOMOR'] ?>', <?= $k + 1 ?>)">Hapus</button>
                                     </td>
                             </tr>
                             <?php $n++ ?>
@@ -294,8 +294,8 @@
                     <?php elseif ($rows['NOMOR'] == 13) : ?>
                         <div class="input">
                             <select name="durasi_pengembangan_diri" id="durasi_pengembangan_diri" class="input-field" value="" required/>
-                                <option value="10-10">10 - 30 Jam</option>
-                                <option value="30-80">30 - 80 Jam</option>
+                                <option value="10-30">10 - 30 Jam</option>
+                                <option value="31-80">31 - 80 Jam</option>
                                 <option value="81-160">81 - 160 Jam</option>
                                 <option value="161-480">161 - 480 Jam</option>
                                 <option value="481-640">481 - 640 Jam</option>

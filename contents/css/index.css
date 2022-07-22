@@ -60,7 +60,7 @@ body {
     font-family: 'Poppins', sans-serif;
     font-size: 0.88rem;
     background: var(--color-background);
-    user-select: none;
+    /* user-select: none; */
     overflow-x: hidden;
     color: var(--color-dark);
 }
@@ -81,7 +81,7 @@ button {
     padding: var(--button-padding-2);
 }
 
-.edit-button {
+.primary-button {
     transition: all 300ms ease;
     background: var(--color-primary);
     color: var(--color-white);
@@ -560,8 +560,21 @@ dialog {
 }
 
 /* CANVAS */
+.periode {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.6rem;
+}
 
 canvas#chart {
+    background: var(--color-white);
+    max-width: 100%;
+    /* margin-top: 2rem; */
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+}
+
+canvas#periode-penunjang {
     background: var(--color-white);
     max-width: 100%;
     /* margin-top: 2rem; */
@@ -634,36 +647,43 @@ canvas#chart {
     margin-bottom: 0.8rem;
 }
 
-.right .recent-updates .updates {
-    background: var(--color-white);
-    padding: var(--card-padding);
-    border-radius: var(--card-border-radius);
-    box-shadow: var(--box-shadow);
-    transition: all 300ms ease;
-}
-
 .right .recent-updates .updates:hover {
     box-shadow: none;
 }
 
 .right .recent-updates .updates {
     background: var(--color-white);
+    display: block;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.7rem;
+    padding: 1.4rem var(--card-padding);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+}
+
+.right .recent-updates .updates .message-column {
     display: flex;
     align-items: center;
     gap: 1rem;
     margin-bottom: 0.7rem;
-    /* padding: 1.4rem var(--card-padding); */
-    border-radius: var(--border-radius-3);
-    box-shadow: var(--box-shadow);
-    transition: all 300ms ease;
 }
 
 .right .recent-updates .icon {
     padding: 0.6rem;
     color: var(--color-white);
     border-radius: 50%;
-    background: var(--color-success);
+    /* background: var(--color-success); */
     display: flex;
+}
+
+.right .recent-updates .penunjang {
+    background: var(--color-success);
+}
+
+.right .recent-updates .pendidikan {
+    background: var(--color-primary);
 }
 
 /* SALES ANALYTICS */
@@ -824,6 +844,10 @@ input {
     font: inherit;
     font-size: 1.125rem;
     padding: 0.25rem 0;
+    color: var(--color-dark);
+}
+option {
+    background-color: var(--color-white);
 }
 .input-field:focus, .input-field:valid {
     outline: 0;
@@ -994,7 +1018,7 @@ input {
 }
 .add-modal .modal-background .modal {
     text-align: left;
-    background: white;
+    background: var(--color-white);
     padding: 1rem;
     display: inline-block;
     border-radius: 3px;
@@ -1071,7 +1095,7 @@ input {
 }
 .edit-modal .modal-background .modal {
     text-align: left;
-    background: white;
+    background: var(--color-white);
     padding: 50px;
     display: inline-block;
     border-radius: 3px;

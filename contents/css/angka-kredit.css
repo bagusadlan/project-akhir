@@ -50,9 +50,9 @@ main .grid-top {
     justify-content: space-between;
 }
 
-main table tr td:nth-child(3) {
+/* main table tr td:nth-child(3) {
     text-align: center;
-}
+} */
 
 @media screen and (max-width: 768px) {
     main .grid-top {

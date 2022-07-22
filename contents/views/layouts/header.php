@@ -29,6 +29,7 @@
             </div>
 
             <div class="sidebar">
+            <?php if (isset($_SESSION['jabfung'])) : ?>
                 <a href="<?= base_url; ?>/Dashboard" class="list dashboard">
                     <span class="material-icons-outlined">dashboard</span>
                     <h3>Dashboard</h3>
@@ -44,16 +45,26 @@
                 <a href="<?= base_url; ?>/Pesan" class="list pesan">
                     <span class="material-icons-outlined">email</span>
                     <h3>Pesan</h3>
-                    <span class="message-count">1</span>
+                    <!-- <span class="message-count">1</span> -->
                 </a>
+            <?php else : ?>
+                <a href="<?= base_url; ?>/DashboardAdmin" class="list dashboard">
+                    <span class="material-icons-outlined">dashboard</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="<?= base_url; ?>/AdminPendidikan" class="list pendidikan">
+                    <span class="material-icons-outlined">assignment</span>
+                    <h3>Pendidikan</h3>
+                </a>
+                <a href="<?= base_url; ?>/AdminPenunjang" class="list penunjang">
+                    <span class="material-icons-outlined">assignment</span>
+                    <h3>Penunjang</h3>
+                </a>
+            <?php endif ?>
                 <a href="<?= base_url; ?>/Profil" class="list profil">
                     <span class="material-icons-outlined">person</span>
                     <h3>Profil</h3>
                 </a>
-                <!-- <a href="<?= base_url; ?>/Dokumen" class="list">
-                    <span class="material-icons-outlined">article</span>
-                    <h3>Dokumen</h3>
-                </a> -->
                 <a href="<?= base_url; ?>/Logout">
                     <span class="material-icons-outlined">logout</span>
                     <h3>Logout</h3>
@@ -78,7 +89,11 @@
                         <div class="profile">
                             <div class="info">
                                 <p><b><?= $_SESSION['name']; ?></b></p>
-                                <small class="text-muted"><?= $_SESSION['jabfung'] ?></small>
+                                <?php if (isset($_SESSION['jabfung'])) : ?>
+                                    <small class="text-muted"><?= $_SESSION['jabfung'] ?></small>
+                                <?php else : ?>
+                                    <small class="text-muted"><?= $_SESSION['staff'] ?></small>
+                                <?php endif ?>
                             </div>
                             <!-- <div class="profile-photo">
                                 <img src="/img/photo.png" alt="">

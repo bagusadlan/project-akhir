@@ -3,23 +3,11 @@
 	$db_user = "PA0026";
 	$db_pass = "537577";
 
-/**
- * fungsi untuk mendapat koneksi ke db
- * @param  string $db_user username untuk login db
- * @param  string $db_pass password untuk login db
- * @return oci_resource          objek koneksi db
- */
-function konekDb() {
-	global $db_user, $db_pass;
-	
-    $con = oci_connect($db_user,$db_pass,"10.252.209.213/orcl.mis.pens.ac.id");
-    if(!$con) {
-        // responseError('ERR-DB');
+	$con = oci_connect($db_user,$db_pass,"10.252.209.213/orcl.mis.pens.ac.id");
+	if(!$con) {
+		// responseError('ERR-DB');
 		'Tidak dapat terconeksi dengan database';
-    }
-    return $con;
-}
-
+	}
 
 /**
  * eksekusi query db
@@ -32,8 +20,10 @@ function konekDb() {
  * @return oci_resource      resouce oci
  */
 
-function query_view($con, $sql, $data)
+function query_view($sql, $data)
 {
+	global $con;
+
     $parse = oci_parse($con, $sql);
 	foreach ($data as $key => $val) {    
     	oci_bind_by_name($parse, $key, $data[$key]);
@@ -42,8 +32,10 @@ function query_view($con, $sql, $data)
     return $parse;
 }
 
-function query_insert($con, $sql, $data)
+function query_insert($sql, $data)
 {
+	global $con;
+
     $parse = oci_parse($con, $sql);
 	foreach ($data as $key => $val) {    
     	oci_bind_by_name($parse, $key, $data[$key]);
@@ -55,8 +47,10 @@ function query_insert($con, $sql, $data)
 		return "Failed Insert";	
 }
 
-function query_update($con, $sql, $data)
+function query_update($sql, $data)
 {
+	global $con;
+
     $parse = oci_parse($con, $sql);
 	foreach ($data as $key => $val) {    
     	oci_bind_by_name($parse, $key, $data[$key]);
@@ -68,8 +62,10 @@ function query_update($con, $sql, $data)
 		return "Failed Update";	
 }
 
-function query_delete($con, $sql, $data)
+function query_delete($sql, $data)
 {
+	global $con;
+
     $parse = oci_parse($con, $sql);
 	foreach ($data as $key => $val) {    
     	oci_bind_by_name($parse, $key, $data[$key]);
@@ -81,29 +77,22 @@ function query_delete($con, $sql, $data)
 		return "Failed Delete";	
 }
 
-function getPegawai($con, $nip){
-	// $sqlPegawai = "SELECT STAFF, FUNGSIONAL FROM PEGAWAI WHERE NIP=:v1";
-	$sqlPegawai = "SELECT S.STAFF, J.JABATAN FROM PEGAWAI P  
+function getPegawai($nip){
+	$sqlPegawai = "SELECT S.STAFF AS KATEGORI_STAFF, J.JABATAN, P.STAFF FROM PEGAWAI P  
 	LEFT OUTER JOIN STAFF S ON S.NOMOR = P.STAFF
 	LEFT OUTER JOIN JABATAN_FUNGSIONAL J ON J.NOMOR = P.FUNGSIONAL WHERE NIP=:V1";
 	$nomorNip = array(':v1' =>  $nip);
-	$pegawai = query_view($con, $sqlPegawai, $nomorNip);
+	$pegawai = query_view($sqlPegawai, $nomorNip);
 	
 	oci_fetch_all($pegawai, $rowPegawai, 0, 0, OCI_FETCHSTATEMENT_BY_ROW);
-	$tmpStaff = [];
-	foreach ($rowPegawai as $pegawai) {
-		foreach ($pegawai as $key => $value) {
-			array_push($tmpStaff, $value);
-		}
-	}
-
-	return $tmpStaff;
+	
+	return $rowPegawai[0];
 }
 
-function getGelar($con, $nip){
+function getGelar($nip){
 	$sqlPegawai = "SELECT GELAR_DPN, GELAR_BLK FROM PEGAWAI WHERE NIP=:v1";
 	$nomorNip = array(':v1' =>  $nip);
-	$pegawai = query_view($con, $sqlPegawai, $nomorNip);
+	$pegawai = query_view($sqlPegawai, $nomorNip);
 	
 	oci_fetch_all($pegawai, $rowPegawai, 0, 0, OCI_FETCHSTATEMENT_BY_ROW);
 
